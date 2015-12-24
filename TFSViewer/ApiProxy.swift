@@ -25,7 +25,7 @@ class ApiProxy{
     
     func test(){
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let userPasswordString = "xilojc2001:mantis1530*"
+        let userPasswordString = "xilojc2001:pass"
         let userPasswordData = userPasswordString.dataUsingEncoding(NSUTF8StringEncoding)
         let base64EncodedCredential = userPasswordData!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
         
