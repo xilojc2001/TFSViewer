@@ -12,15 +12,22 @@ import CoreData
 
 class projectsViewController: UIViewController, UIPickerViewDelegate {
     
-    var projects = ["P1","P2","P3","P4"]
+    var projectsList = [""]
+    var listCount : Int = 0
     
     @IBOutlet weak var selectedProject: UILabel!
     let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        let api = ApiProxy()
+        api.getProjects() 
         
-       
+        //Se recorre al arreglo de proyectos
+        for resultItem in api.projectList {
+            projectsList.append(resultItem.name)
+        }
+        
+        super.viewDidLoad()
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,28 +40,15 @@ class projectsViewController: UIViewController, UIPickerViewDelegate {
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
-       return projects.count
+       return projectsList.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
-        return projects[row]
+        return projectsList[row]
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
-        let projectSelection = projects [row]
+        let projectSelection = projectsList [row]
         selectedProject.text = "Selected Project" + projectSelection
-        
-        //Establezco el objeto en el que se van a almacenar las configuraciones iniciales
-        let context = appDel.managedObjectContext
-        let configObj = NSEntityDescription.entityForName ("TfsConfiguration", inManagedObjectContext: context)
-        let oConfig = TfsConfiguration(entity: configObj! ,insertIntoManagedObjectContext: context)
-        oConfig.getConfig()
-        
-        //selectedProject.text = "Selected Project" + projects [0]
-        selectedProject.text = oConfig.account
-  
-        print ("Hola \(oConfig.account)")
-        
-        
     }
 }

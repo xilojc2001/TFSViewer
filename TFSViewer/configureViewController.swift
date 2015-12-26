@@ -86,7 +86,7 @@ class configureViewController: UIViewController {
         txtUserName.text = oConfig.username
         txtPassword.text = oConfig.password
         lblMessage.text = ""
-    }
+    } 
     
     override func viewDidLoad() {
         super.viewDidLoad()

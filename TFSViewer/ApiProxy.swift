@@ -7,12 +7,14 @@
 //
 
 import Foundation
-
+import UIKit
+import CoreData
 
 class ApiProxy{
     
     var projectList  : Array<Project> = []
- 
+    let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     struct Project {
         var id = ""
         var name = ""
@@ -23,9 +25,19 @@ class ApiProxy{
     
     init(){ }
     
-    func test(){
+    //Este metodo consulta los proyectos a traves del servicio web
+    func getProjects(){
+        
+        //Consulto los parametros de conexión
+//        let context = appDel.managedObjectContext
+//        let configObj = NSEntityDescription.entityForName ("TfsConfiguration", inManagedObjectContext: context)
+//        let oConfig = TfsConfiguration(entity: configObj! ,insertIntoManagedObjectContext: context)
+//        oConfig.getConfig()
+        
+        //Inicializo las variables necesarias para el consumo de los servicios
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let userPasswordString = "xilojc2001:pass"
+       // let userPasswordString = oConfig.username! + ":" + oConfig.password!
+         let userPasswordString = "xilojc2001:Mantis15"
         let userPasswordData = userPasswordString.dataUsingEncoding(NSUTF8StringEncoding)
         let base64EncodedCredential = userPasswordData!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
         
@@ -37,8 +49,6 @@ class ApiProxy{
         
         var running = false
         let url = NSURL(string: "https://cnxco.visualstudio.com/DefaultCollection/_apis/projects?api-version=1.0")
-        
-        
         
         let task = session.dataTaskWithURL(url!) {
             (let data, let response, let error) in
@@ -52,11 +62,10 @@ class ApiProxy{
                 do {
                     let anyObj: AnyObject = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
                     
+                    //Si la consulta del servicio arroja datos, los pasa de json a objetos
                     if let dict = anyObj as? [String: AnyObject] {
                         if let objArray = dict["value"] as? [AnyObject] {
-                          
-                            self.projectList = self.parseJson(objArray)
-                            print (self.projectList[0].name)
+                          self.projectList = self.parseJsonProjects(objArray)
                         }
                     }
                 }
@@ -76,7 +85,7 @@ class ApiProxy{
         }
     }
     
-    func parseJson(anyObj:AnyObject) -> Array<Project>{
+    func parseJsonProjects(anyObj:AnyObject) -> Array<Project>{
         
         var list:Array<Project> = []
         
