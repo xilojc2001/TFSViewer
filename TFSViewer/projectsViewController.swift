@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import CoreData
+
 
 class projectsViewController: UIViewController, UIPickerViewDelegate {
     
     var projects = ["P1","P2","P3","P4"]
     
     @IBOutlet weak var selectedProject: UILabel!
-    
+    let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectedProject.text = "Selected Project" + projects [0]
+        
+       
     }
     
     override func didReceiveMemoryWarning() {
@@ -40,5 +43,18 @@ class projectsViewController: UIViewController, UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         let projectSelection = projects [row]
         selectedProject.text = "Selected Project" + projectSelection
+        
+        //Establezco el objeto en el que se van a almacenar las configuraciones iniciales
+        let context = appDel.managedObjectContext
+        let configObj = NSEntityDescription.entityForName ("TfsConfiguration", inManagedObjectContext: context)
+        let oConfig = TfsConfiguration(entity: configObj! ,insertIntoManagedObjectContext: context)
+        oConfig.getConfig()
+        
+        //selectedProject.text = "Selected Project" + projects [0]
+        selectedProject.text = oConfig.account
+  
+        print ("Hola \(oConfig.account)")
+        
+        
     }
 }

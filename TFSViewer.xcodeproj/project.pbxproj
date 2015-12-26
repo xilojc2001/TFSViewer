@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		527D800D1C20EC9F00C83CB3 /* configureObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527D800C1C20EC9F00C83CB3 /* configureObj.swift */; };
 		527D80111C2112F200C83CB3 /* ApiProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527D80101C2112F200C83CB3 /* ApiProxy.swift */; };
 		52B734211C1E43970002F87B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B734201C1E43970002F87B /* AppDelegate.swift */; };
 		52B734281C1E43970002F87B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52B734261C1E43970002F87B /* Main.storyboard */; };
@@ -20,6 +19,8 @@
 		52B734551C1E5B7D0002F87B /* workViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B734541C1E5B7D0002F87B /* workViewController.swift */; };
 		52B734571C1E5CAF0002F87B /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B734561C1E5CAF0002F87B /* testViewController.swift */; };
 		52B7345A1C1E65580002F87B /* storeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52B734581C1E65580002F87B /* storeModel.xcdatamodeld */; };
+		52C5D6761C2D79BC00244ACC /* TfsConfiguration+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5D6741C2D79BC00244ACC /* TfsConfiguration+CoreDataProperties.swift */; };
+		52C5D6771C2D79BC00244ACC /* TfsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5D6751C2D79BC00244ACC /* TfsConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +41,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		527D800C1C20EC9F00C83CB3 /* configureObj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = configureObj.swift; sourceTree = "<group>"; };
 		527D80101C2112F200C83CB3 /* ApiProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiProxy.swift; sourceTree = "<group>"; };
 		52861A9A1C27A9B500076BA4 /* storeModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "storeModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		52861A9B1C27AADA00076BA4 /* storeModel_3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = storeModel_3.xcdatamodel; sourceTree = "<group>"; };
@@ -61,6 +61,8 @@
 		52B734541C1E5B7D0002F87B /* workViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = workViewController.swift; sourceTree = "<group>"; };
 		52B734561C1E5CAF0002F87B /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
 		52B734591C1E65580002F87B /* storeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = storeModel.xcdatamodel; sourceTree = "<group>"; };
+		52C5D6741C2D79BC00244ACC /* TfsConfiguration+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TfsConfiguration+CoreDataProperties.swift"; path = "../TfsConfiguration+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		52C5D6751C2D79BC00244ACC /* TfsConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TfsConfiguration.swift; path = ../TfsConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 		52B7341F1C1E43970002F87B /* TFSViewer */ = {
 			isa = PBXGroup;
 			children = (
+				52C5D6781C2D79DF00244ACC /* DataObjects */,
 				52B734201C1E43970002F87B /* AppDelegate.swift */,
 				52B734261C1E43970002F87B /* Main.storyboard */,
 				52B734291C1E43970002F87B /* Assets.xcassets */,
@@ -120,8 +123,6 @@
 				52B734521C1E57010002F87B /* projectsViewController.swift */,
 				52B734541C1E5B7D0002F87B /* workViewController.swift */,
 				52B734561C1E5CAF0002F87B /* testViewController.swift */,
-				52B734581C1E65580002F87B /* storeModel.xcdatamodeld */,
-				527D800C1C20EC9F00C83CB3 /* configureObj.swift */,
 				527D80101C2112F200C83CB3 /* ApiProxy.swift */,
 			);
 			path = TFSViewer;
@@ -143,6 +144,16 @@
 				52B734441C1E43980002F87B /* Info.plist */,
 			);
 			path = TFSViewerUITests;
+			sourceTree = "<group>";
+		};
+		52C5D6781C2D79DF00244ACC /* DataObjects */ = {
+			isa = PBXGroup;
+			children = (
+				52C5D6741C2D79BC00244ACC /* TfsConfiguration+CoreDataProperties.swift */,
+				52C5D6751C2D79BC00244ACC /* TfsConfiguration.swift */,
+				52B734581C1E65580002F87B /* storeModel.xcdatamodeld */,
+			);
+			name = DataObjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,12 +289,13 @@
 			files = (
 				52B734531C1E57010002F87B /* projectsViewController.swift in Sources */,
 				52B734551C1E5B7D0002F87B /* workViewController.swift in Sources */,
-				527D800D1C20EC9F00C83CB3 /* configureObj.swift in Sources */,
 				52B734211C1E43970002F87B /* AppDelegate.swift in Sources */,
 				52B734571C1E5CAF0002F87B /* testViewController.swift in Sources */,
 				527D80111C2112F200C83CB3 /* ApiProxy.swift in Sources */,
 				52B734511C1E56AA0002F87B /* configureViewController.swift in Sources */,
 				52B7345A1C1E65580002F87B /* storeModel.xcdatamodeld in Sources */,
+				52C5D6771C2D79BC00244ACC /* TfsConfiguration.swift in Sources */,
+				52C5D6761C2D79BC00244ACC /* TfsConfiguration+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
