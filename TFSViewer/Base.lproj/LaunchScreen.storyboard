@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="xiloLogo" translatesAutoresizingMaskIntoConstraints="NO" id="xt3-WQ-c8v">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xiloLogo" translatesAutoresizingMaskIntoConstraints="NO" id="xt3-WQ-c8v">
                                 <rect key="frame" x="198" y="173" width="204" height="254"/>
                             </imageView>
                         </subviews>

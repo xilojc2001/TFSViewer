@@ -9,6 +9,7 @@
 import UIKit
 
 class testViewController: UIViewController {
+    let sessionMng = sessionManager.sharedIntance
     
     override func viewDidLoad() {
         super.viewDidLoad()

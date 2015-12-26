@@ -8,11 +8,32 @@
 
 import UIKit
 
-class workViewController: UIViewController {
+class workViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
+    let sessionMng = sessionManager.sharedIntance
+    
+    @IBOutlet var tableView: UITableView!
+    
+    var queryList = [""]
+    let textCellIdentifier = "TextCell"
     
     override func viewDidLoad() {
+        showQueryFolders()
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    func showQueryFolders(){
+        let wsc = webserviceController()
+        wsc.getQueries()
+        
+        //Se recorre al arreglo de proyectos
+        for resultItem in wsc.queryList {
+            queryList.append(resultItem.name)
+        }
+        
+        queryList.sortInPlace()
     }
     
     override func didReceiveMemoryWarning() {
@@ -20,5 +41,27 @@ class workViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return queryList.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        
+        let row = indexPath.row
+        cell.textLabel?.text = queryList[row]
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let row = indexPath.row
+        print(queryList[row])
+    }
 }

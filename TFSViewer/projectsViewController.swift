@@ -9,24 +9,23 @@
 import UIKit
 import CoreData
 
-
 class projectsViewController: UIViewController, UIPickerViewDelegate {
-    
-    var projectsList = [""]
-    var listCount : Int = 0
-    
     @IBOutlet weak var selectedProject: UILabel!
+   
     let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+    let sessionMng = sessionManager.sharedIntance
+    var projectsList = [""]
     
     override func viewDidLoad() {
-        let api = ApiProxy()
-        api.getProjects() 
+        let wsc = webserviceController()
+        wsc.getProjects()
         
         //Se recorre al arreglo de proyectos
-        for resultItem in api.projectList {
+        for resultItem in wsc.projectList {
             projectsList.append(resultItem.name)
         }
-        
+       
+        projectsList.sortInPlace()
         super.viewDidLoad()
     }
     
@@ -49,6 +48,6 @@ class projectsViewController: UIViewController, UIPickerViewDelegate {
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         let projectSelection = projectsList [row]
-        selectedProject.text = "Selected Project" + projectSelection
+        sessionMng.selectedProject = projectSelection
     }
 }

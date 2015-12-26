@@ -42,7 +42,9 @@ class TfsConfiguration: NSManagedObject {
     
     
     //Funcion encargada de obtener la información de configuración del TFS
-    func resetConfig () {
+    func resetConfig () -> String {
+        var result : String
+        
         //Defino una variable para tener acceso al contexto de la aplicación
         let context = appDel.managedObjectContext
         
@@ -51,9 +53,13 @@ class TfsConfiguration: NSManagedObject {
         
         do {
             try context.executeRequest(deleteRequest)
+            result = "TFS Configuration Reset!"
         } catch _ as NSError {
-            print ("Unable to delete data from TFS Configuration")
+             result = "Unable to reset TFS Configuration"
         }
+        
+        //Se debe mostrar al usuario un mensaje indicando que la información fue reiniciada
+        return result
     }
     
     //Funcion encargada de obtener la información de configuración del TFS

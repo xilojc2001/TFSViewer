@@ -22,6 +22,7 @@ class configureViewController: UIViewController {
     @IBOutlet var txtPassword: UITextField!
     
     let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+    let sessionMng = sessionManager.sharedIntance
  
     //Esta funcion se encarga de tomar los datos de la pantalla y almacenarlos en la base de datos
     @IBAction func btnSave (){
@@ -65,7 +66,21 @@ class configureViewController: UIViewController {
         lblMessage.text=result
     }
     
-    @IBAction func btnCancel(){
+    @IBAction func btnReset(){
+        //Inicializo la variable con la informacion de la configuración
+        var result : String
+        
+        //Establezco el objeto en el que se van a almacenar las configuraciones iniciales
+        let context = appDel.managedObjectContext
+        let configObj = NSEntityDescription.entityForName ("TfsConfiguration", inManagedObjectContext: context)
+        let oConfig = TfsConfiguration(entity: configObj! ,insertIntoManagedObjectContext: context)
+        
+        result = oConfig.resetConfig()
+        
+        //Se presenta el mensaje resultado
+        lblMessage.text=result
+        
+        //Refrescar la visualizacion de la configuración
         loadInitData ()
     }
     
