@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		527D80111C2112F200C83CB3 /* apiProxyOri.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527D80101C2112F200C83CB3 /* apiProxyOri.swift */; };
-		529A58791C2E3D17001AD7E9 /* ApiProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A58781C2E3D17001AD7E9 /* ApiProxy.swift */; };
+		527D80111C2112F200C83CB3 /* apiProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527D80101C2112F200C83CB3 /* apiProxy.swift */; };
 		52B734211C1E43970002F87B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B734201C1E43970002F87B /* AppDelegate.swift */; };
 		52B734281C1E43970002F87B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52B734261C1E43970002F87B /* Main.storyboard */; };
 		52B7342A1C1E43970002F87B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52B734291C1E43970002F87B /* Assets.xcassets */; };
@@ -42,10 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		527D80101C2112F200C83CB3 /* apiProxyOri.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = apiProxyOri.swift; sourceTree = "<group>"; };
+		527D80101C2112F200C83CB3 /* apiProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = apiProxy.swift; sourceTree = "<group>"; };
 		52861A9A1C27A9B500076BA4 /* storeModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "storeModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		52861A9B1C27AADA00076BA4 /* storeModel_3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = storeModel_3.xcdatamodel; sourceTree = "<group>"; };
-		529A58781C2E3D17001AD7E9 /* ApiProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiProxy.swift; sourceTree = "<group>"; };
 		52B7341D1C1E43970002F87B /* TFSViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFSViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52B734201C1E43970002F87B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52B734271C1E43970002F87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -125,8 +123,7 @@
 				52B734521C1E57010002F87B /* projectsViewController.swift */,
 				52B734541C1E5B7D0002F87B /* workViewController.swift */,
 				52B734561C1E5CAF0002F87B /* testViewController.swift */,
-				527D80101C2112F200C83CB3 /* apiProxyOri.swift */,
-				529A58781C2E3D17001AD7E9 /* ApiProxy.swift */,
+				527D80101C2112F200C83CB3 /* apiProxy.swift */,
 			);
 			path = TFSViewer;
 			sourceTree = "<group>";
@@ -294,10 +291,9 @@
 				52B734551C1E5B7D0002F87B /* workViewController.swift in Sources */,
 				52B734211C1E43970002F87B /* AppDelegate.swift in Sources */,
 				52B734571C1E5CAF0002F87B /* testViewController.swift in Sources */,
-				527D80111C2112F200C83CB3 /* apiProxyOri.swift in Sources */,
+				527D80111C2112F200C83CB3 /* apiProxy.swift in Sources */,
 				52B734511C1E56AA0002F87B /* configureViewController.swift in Sources */,
 				52B7345A1C1E65580002F87B /* storeModel.xcdatamodeld in Sources */,
-				529A58791C2E3D17001AD7E9 /* ApiProxy.swift in Sources */,
 				52C5D6771C2D79BC00244ACC /* TfsConfiguration.swift in Sources */,
 				52C5D6761C2D79BC00244ACC /* TfsConfiguration+CoreDataProperties.swift in Sources */,
 			);
