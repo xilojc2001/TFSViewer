@@ -14,7 +14,7 @@ import CoreData
 
 extension TfsConfiguration {
 
-    @NSManaged var account: String?
+    @NSManaged var account: String
     @NSManaged var api: NSDecimalNumber?
     @NSManaged var password: String?
     @NSManaged var username: String?

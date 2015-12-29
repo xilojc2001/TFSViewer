@@ -19,21 +19,31 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         showQueryFolders()
         super.viewDidLoad()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
     }
     
     func showQueryFolders(){
         let wsc = webserviceController()
+        
+        //Identifico si ya se ha consultado algun otro nivel
+        if sessionMng.folderLevel == nil {
+            sessionMng.folderLevel = 0
+        }
+        
+        //Elimino los datos previamente almacenados
+        self.queryList.removeAll()
+        
+        //Obtengo los queries que corresponden al nivel
         wsc.getQueries()
         
         //Se recorre al arreglo de proyectos
         for resultItem in wsc.queryList {
-            queryList.append(resultItem.name)
+            self.queryList.append(resultItem.name)
         }
         
-        queryList.sortInPlace()
+        self.queryList.sortInPlace()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,6 +72,9 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let row = indexPath.row
-        print(queryList[row])
+        sessionMng.selectedQuery = queryList[row]
+        sessionMng.folderLevel = sessionMng.folderLevel! + 1
+        showQueryFolders()
+        tableView.reloadData()
     }
 }

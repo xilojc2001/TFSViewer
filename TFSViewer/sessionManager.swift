@@ -22,5 +22,7 @@ class sessionManager{
         return Static.instance!
     }
     
-    var selectedProject: String = ""
+    var selectedProject: String?
+    var folderLevel : Int?
+    var selectedQuery : String?
 }

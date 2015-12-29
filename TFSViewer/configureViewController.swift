@@ -28,8 +28,8 @@ class configureViewController: UIViewController {
     @IBAction func btnSave (){
         //Establezco el objeto en el que se van a almacenar las configuraciones iniciales
         let context = appDel.managedObjectContext
-        let configObj = NSEntityDescription.insertNewObjectForEntityForName("TfsConfiguration", inManagedObjectContext: context)
-        let oConfig = TfsConfiguration(entity: configObj.entity,insertIntoManagedObjectContext: context)
+        let configObj = NSEntityDescription.entityForName("TfsConfiguration", inManagedObjectContext: context)
+        let oConfig = TfsConfiguration(entity: configObj!,insertIntoManagedObjectContext: context)
         
         //Inicializo la variable con la informacion de la configuración
         var result : String

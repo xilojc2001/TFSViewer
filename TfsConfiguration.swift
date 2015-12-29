@@ -12,7 +12,7 @@ import UIKit
 
 class TfsConfiguration: NSManagedObject {
     
-    let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDel = UIApplication.sharedApplication().delegate as! AppDelegate    
     
     //Funcion encargada de almacenar la información de configuración del TFS
     func saveConfig () -> String{
@@ -85,7 +85,7 @@ class TfsConfiguration: NSManagedObject {
         for resultItem in results {
             let tfsItem = resultItem as! TfsConfiguration
             
-            if tfsItem.account != nil {
+            if tfsItem.password != nil {
                 self.account = tfsItem.account
                 self.api = tfsItem.api
                 self.username = tfsItem.username

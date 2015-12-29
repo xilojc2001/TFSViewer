@@ -56,7 +56,7 @@ class webserviceController {
         let session = NSURLSession(configuration: config)
         
         var running = false
-        let url = NSURL(string: "https://" + oConfig.account! + ".visualstudio.com/DefaultCollection/_apis/projects?api-version=" + (oConfig.api?.stringValue)!)
+        let url = NSURL(string: "https://" + oConfig.account + ".visualstudio.com/DefaultCollection/_apis/projects?api-version=" + (oConfig.api?.stringValue)!)
         
         let task = session.dataTaskWithURL(url!) {
             (let data, let response, let error) in
@@ -136,11 +136,53 @@ class webserviceController {
         config.HTTPAdditionalHeaders = ["Authorization" : authString]
         
         let session = NSURLSession(configuration: config)
-        
         var running = false
-        let url = NSURL(string: "https://" + oConfig.account! + ".visualstudio.com/DefaultCollection/" + sessionMng.selectedProject + "/_apis/wit/queries?$depth=1&api-version=" + (oConfig.api?.stringValue)!)
         
-        let task = session.dataTaskWithURL(url!) {
+        //Defino las variables que se requieren para construir la cadena de la consulta del servicio
+        var urlBase : String = ""
+        var api: String = ""
+        var finalURL : String = ""
+        var folderLevel : Int = 0
+        var selectedQuery : String = ""
+        
+        //Defino la estructura de la cadena base que no cambia a lo largo de las consultas
+        if let account : String = oConfig.account, let selPro : String = sessionMng.selectedProject {
+            urlBase = "https://" + account + ".visualstudio.com/DefaultCollection/" + selPro + "/_apis/wit/queries"
+        }
+        
+        //Defino una variable que me permite eliminar lo opcional de la variable
+        if let apiOpt : String = oConfig.api!.stringValue {
+           api = apiOpt
+        }
+        
+        //Defino una variable que me permite eliminar lo opcional de la variable
+        if let folderLevelOpt : Int = sessionMng.folderLevel  {
+            folderLevel = folderLevelOpt
+        }
+        
+        //Defino una variable que me permite eliminar lo opcional de la variable
+        if let selectedQueryOpt : String = sessionMng.selectedQuery  {
+            selectedQuery = selectedQueryOpt
+        }
+        
+        switch folderLevel {
+            case 0 :
+                    finalURL = urlBase + "?api-version=" + api
+            case 1 :
+                    finalURL = urlBase + "/" + selectedQuery + "?$depth=1&api-version=" + api
+            default :
+                finalURL = finalURL + ""
+        }
+        
+        //Me aseguro de que el arreglo en donde va a guardar la informacion este vacio
+        self.queryList.removeAll()
+        
+        //Codifico la cadena para que los espacios y demas caracteres especiales no generen inconvenientes
+        finalURL = finalURL.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        
+        let urlWS = NSURL (string: finalURL)
+        
+        let task = session.dataTaskWithURL(urlWS!) {
             (let data, let response, let error) in
             if let _ = response as? NSHTTPURLResponse {
                 let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
@@ -152,13 +194,25 @@ class webserviceController {
                 do {
                     let anyObj: AnyObject = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
                     
-                    //Si la consulta del servicio arroja datos, los pasa de json a objetos
-                    if let dict = anyObj as? [String: AnyObject] {
-                        if let objArray = dict["value"] as? [AnyObject] {
-                            self.queryList = self.parseJsonQueries(objArray)
+                    if folderLevel == 0{
+                        //Si la consulta del servicio arroja datos, los pasa de json a objetos
+                        if let dict = anyObj as? [String: AnyObject] {
+                            if let objArray = dict["value"] as? [AnyObject] {
+                                self.queryList = self.parseJsonQueries(objArray)
+                            }
                         }
                     }
-                }
+                    
+                    if folderLevel == 1{
+                        //Si la consulta del servicio arroja datos, los pasa de json a objetos
+                        if let dict = anyObj as? [String: AnyObject] {
+                            if let objArray = dict["children"] as? [AnyObject] {
+                                self.queryList = self.parseJsonQueries(objArray)
+                            }
+                        }
+                    }
+                 
+                 }
                 catch _ {
                     print ("Unable to convert NSData a AnyObject")
                 }
@@ -173,6 +227,7 @@ class webserviceController {
             print("waiting...")
             sleep(1)
         }
+      
     }
     
     //Este metodo convierte los resultados json del servicio a objetos
@@ -190,10 +245,11 @@ class webserviceController {
                 b.path = (json["path"] as AnyObject? as? String) ?? ""
                 b.wiql = (json["wiql"] as AnyObject? as? String) ?? ""
                 
-                list.append(b)
+                list.append(b)                
             }
         }
         
         return list
     }
+    
 }
