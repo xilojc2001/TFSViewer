@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5239BA491C2E4C0B007E01F9 /* sessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5239BA481C2E4C0B007E01F9 /* sessionManager.swift */; };
 		529A587B1C2E3E64001AD7E9 /* webserviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A587A1C2E3E64001AD7E9 /* webserviceController.swift */; };
+		52B4023B1C3360FA00D4A86A /* reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B4023A1C3360FA00D4A86A /* reachability.swift */; };
 		52B734211C1E43970002F87B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B734201C1E43970002F87B /* AppDelegate.swift */; };
 		52B734281C1E43970002F87B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52B734261C1E43970002F87B /* Main.storyboard */; };
 		52B7342A1C1E43970002F87B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52B734291C1E43970002F87B /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		52861A9A1C27A9B500076BA4 /* storeModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "storeModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		52861A9B1C27AADA00076BA4 /* storeModel_3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = storeModel_3.xcdatamodel; sourceTree = "<group>"; };
 		529A587A1C2E3E64001AD7E9 /* webserviceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = webserviceController.swift; sourceTree = "<group>"; };
+		52B4023A1C3360FA00D4A86A /* reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = reachability.swift; sourceTree = "<group>"; };
 		52B7341D1C1E43970002F87B /* TFSViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFSViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52B734201C1E43970002F87B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52B734271C1E43970002F87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				52B734561C1E5CAF0002F87B /* testViewController.swift */,
 				529A587A1C2E3E64001AD7E9 /* webserviceController.swift */,
 				5239BA481C2E4C0B007E01F9 /* sessionManager.swift */,
+				52B4023A1C3360FA00D4A86A /* reachability.swift */,
 			);
 			path = TFSViewer;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				52B734571C1E5CAF0002F87B /* testViewController.swift in Sources */,
 				52B734511C1E56AA0002F87B /* configureViewController.swift in Sources */,
 				52B7345A1C1E65580002F87B /* storeModel.xcdatamodeld in Sources */,
+				52B4023B1C3360FA00D4A86A /* reachability.swift in Sources */,
 				52C5D6771C2D79BC00244ACC /* TfsConfiguration.swift in Sources */,
 				5239BA491C2E4C0B007E01F9 /* sessionManager.swift in Sources */,
 				52C5D6761C2D79BC00244ACC /* TfsConfiguration+CoreDataProperties.swift in Sources */,

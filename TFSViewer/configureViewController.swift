@@ -106,6 +106,16 @@ class configureViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadInitData ()
+        
+        //Verifico si hay conexion a internet
+        let isConnected = reachability.isConnectedToNetwork()
+        
+        if isConnected {
+            print ("The connection works!!")
+        } else {
+            print ("There is not Internet connection!!")
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {

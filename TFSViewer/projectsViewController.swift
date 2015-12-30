@@ -49,5 +49,6 @@ class projectsViewController: UIViewController, UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         let projectSelection = projectsList [row]
         sessionMng.selectedProject = projectSelection
+        
     }
 }

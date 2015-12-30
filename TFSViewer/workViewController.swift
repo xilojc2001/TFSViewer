@@ -12,8 +12,10 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let sessionMng = sessionManager.sharedIntance
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var workButton: UITabBarItem!
     
     var queryList = [""]
+    var iconList = [""]
     let textCellIdentifier = "TextCell"
     
     override func viewDidLoad() {
@@ -31,6 +33,7 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         //Elimino los datos previamente almacenados
         self.queryList.removeAll()
+        self.iconList.removeAll()
         
         //Obtengo los queries que corresponden al nivel
         wsc.getQueries()
@@ -38,6 +41,12 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //Se recorre al arreglo de proyectos
         for resultItem in wsc.queryList {
             self.queryList.append(resultItem.name)
+            
+            if resultItem.isFolder == true {
+               self.iconList.append("folderButton")
+            }else{
+               self.iconList.append("queryButton")
+            }
         }
         
         self.queryList.sortInPlace()
@@ -65,6 +74,15 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let row = indexPath.row
         cell.textLabel?.text = queryList[row]
         
+        let queryImage = UIImage(named: "queryButton")        
+        let folderImage = UIImage(named: "folderButton")
+        
+        if iconList[row] == "folderButton"{
+            cell.imageView?.image = folderImage
+        } else {
+            cell.imageView?.image = queryImage
+        }
+        
         return cell
     }
     
@@ -72,9 +90,35 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let row = indexPath.row
-        sessionMng.selectedQuery = queryList[row]
+        
+        //Almaceno la información dependiendo del nivel
+        
+        if sessionMng.folderLevel == 0 {
+           sessionMng.selectedQuery_L0 = queryList[row]
+        }else if sessionMng.folderLevel == 1 {
+            sessionMng.selectedQuery_L1 = queryList[row]
+        }else if sessionMng.folderLevel == 2 {
+            sessionMng.selectedQuery_L2 = queryList[row]
+        }else if sessionMng.folderLevel == 3 {
+            sessionMng.selectedQuery_L3 = queryList[row]
+        }
+        
         sessionMng.folderLevel = sessionMng.folderLevel! + 1
+        
+        //Si se selecciona un registro de la tabla, se debe volver a consultar teniendo en cuenta el nuevo registro
         showQueryFolders()
         tableView.reloadData()
+    }
+    
+    //Esta funcion se encarga de regresar un nivel en la seleccion de queries
+    @IBAction func btnBack (){
+        if sessionMng.folderLevel != 0 {
+            sessionMng.folderLevel = sessionMng.folderLevel! - 1
+            
+            //Si se selecciona un registro de la tabla, se debe volver a consultar teniendo en cuenta el nuevo registro
+            showQueryFolders()
+            tableView.reloadData()
+        }
+        
     }
 }

@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SJv-ZB-Q1i">
-                                <rect key="frame" x="1" y="5" width="600" height="44"/>
+                                <rect key="frame" x="1" y="12" width="600" height="44"/>
                                 <items>
                                     <navigationItem title="TFS Configuration" id="MYg-4f-8bD">
                                         <barButtonItem key="leftBarButtonItem" title="Reset" id="NAT-0h-hBT" userLabel="Reset">
@@ -100,7 +100,7 @@
                             <constraint firstItem="Odu-Fm-4nZ" firstAttribute="top" secondItem="Tte-1Q-Wz6" secondAttribute="bottom" constant="28" id="1Av-Rn-ap9"/>
                             <constraint firstItem="2wW-pI-DrN" firstAttribute="trailing" secondItem="Sl6-AF-iAX" secondAttribute="trailing" id="256-a6-QaG"/>
                             <constraint firstItem="dJd-fL-fvZ" firstAttribute="top" secondItem="2wW-pI-DrN" secondAttribute="bottom" constant="26" id="5FJ-Pq-Y5M"/>
-                            <constraint firstItem="SJv-ZB-Q1i" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" constant="5" id="7De-pN-QBW"/>
+                            <constraint firstItem="SJv-ZB-Q1i" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="top" constant="12" id="7De-pN-QBW"/>
                             <constraint firstItem="Tte-1Q-Wz6" firstAttribute="trailing" secondItem="ICE-pm-Uyv" secondAttribute="trailing" id="7OG-Ib-gEL"/>
                             <constraint firstItem="ICE-pm-Uyv" firstAttribute="top" secondItem="Odu-Fm-4nZ" secondAttribute="bottom" constant="8" symbolic="YES" id="8nN-wn-bp7"/>
                             <constraint firstItem="ekd-3h-L7r" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" constant="-0.5" id="FVm-Pp-FZj"/>
@@ -120,7 +120,7 @@
                             <constraint firstItem="2wW-pI-DrN" firstAttribute="top" secondItem="Sl6-AF-iAX" secondAttribute="bottom" constant="50" id="ajp-yq-tT6"/>
                             <constraint firstItem="Odu-Fm-4nZ" firstAttribute="leading" secondItem="ICE-pm-Uyv" secondAttribute="leading" id="diV-eq-cxn"/>
                             <constraint firstItem="sFv-Ij-dFc" firstAttribute="trailing" secondItem="Mzf-3Y-10T" secondAttribute="trailing" constant="-10" id="ex6-BF-fiy"/>
-                            <constraint firstItem="Sl6-AF-iAX" firstAttribute="top" secondItem="SJv-ZB-Q1i" secondAttribute="bottom" constant="111" id="h61-YE-Q8t"/>
+                            <constraint firstItem="Sl6-AF-iAX" firstAttribute="top" secondItem="SJv-ZB-Q1i" secondAttribute="bottom" constant="104" id="h61-YE-Q8t"/>
                             <constraint firstItem="Mzf-3Y-10T" firstAttribute="bottom" secondItem="Sl6-AF-iAX" secondAttribute="bottom" constant="-38" id="kai-nA-opy"/>
                             <constraint firstItem="Tte-1Q-Wz6" firstAttribute="top" secondItem="dJd-fL-fvZ" secondAttribute="bottom" constant="8" symbolic="YES" id="p0d-jj-fFf"/>
                         </constraints>
@@ -150,30 +150,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Projects" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="zEq-FU-wV5">
-                                <rect key="frame" x="137" y="42" width="327" height="22"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="327" id="VT2-iC-8ar"/>
-                                    <constraint firstAttribute="height" constant="22" id="evu-IN-2Bg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="24"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30g-y4-l6f">
-                                <rect key="frame" x="140" y="97" width="320" height="216"/>
+                            <pickerView contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="30g-y4-l6f">
+                                <rect key="frame" x="140" y="71" width="320" height="256"/>
                                 <connections>
                                     <outlet property="delegate" destination="8rJ-Kc-sve" id="XTr-pv-2x0"/>
                                 </connections>
                             </pickerView>
+                            <navigationBar contentMode="top" translatesAutoresizingMaskIntoConstraints="NO" id="34f-Bz-OZe">
+                                <rect key="frame" x="0.0" y="11" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Projects" id="lkC-6B-diA">
+                                        <barButtonItem key="leftBarButtonItem" id="bia-An-Jef"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="30g-y4-l6f" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="R2v-Kz-tnn"/>
-                            <constraint firstItem="zEq-FU-wV5" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="22" id="UXP-u2-c3T"/>
-                            <constraint firstItem="30g-y4-l6f" firstAttribute="centerX" secondItem="zEq-FU-wV5" secondAttribute="centerX" id="h4y-Sg-jov"/>
-                            <constraint firstItem="30g-y4-l6f" firstAttribute="top" secondItem="zEq-FU-wV5" secondAttribute="bottom" constant="33" id="nza-Qw-TCW"/>
+                            <constraint firstItem="30g-y4-l6f" firstAttribute="top" secondItem="34f-Bz-OZe" secondAttribute="bottom" constant="16" id="8XQ-mi-AJt"/>
+                            <constraint firstItem="34f-Bz-OZe" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="9gm-fZ-YAE"/>
+                            <constraint firstItem="34f-Bz-OZe" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="EfL-jt-LAQ"/>
+                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="30g-y4-l6f" secondAttribute="bottom" constant="224" id="Lhn-1N-YRd"/>
+                            <constraint firstItem="30g-y4-l6f" firstAttribute="centerY" secondItem="QS5-Rx-YEW" secondAttribute="centerY" constant="-101" id="e5T-g9-TNe"/>
+                            <constraint firstItem="30g-y4-l6f" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="jvJ-Xd-6oz"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Projects" image="projectButton" id="cPa-gy-q4n" userLabel="Projects"/>
@@ -194,25 +193,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Test Viewer" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="sxc-mJ-Imi">
-                                <rect key="frame" x="137" y="28" width="327" height="42"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="327" id="Cpe-P0-cqb"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="24"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O39-N7-FwU">
+                                <rect key="frame" x="0.0" y="9" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Test Viewer" id="UNp-1a-kVx" userLabel="Test Viewer"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Qph-Yf-7pg" firstAttribute="top" secondItem="sxc-mJ-Imi" secondAttribute="bottom" constant="481" id="DR2-bO-vB7"/>
-                            <constraint firstItem="sxc-mJ-Imi" firstAttribute="centerX" secondItem="ars-Xn-2Vl" secondAttribute="centerX" id="GF5-Ra-Pkx"/>
-                            <constraint firstItem="sxc-mJ-Imi" firstAttribute="top" secondItem="C6P-sm-S85" secondAttribute="bottom" constant="8" symbolic="YES" id="JBz-VK-oLD"/>
+                            <constraint firstItem="Qph-Yf-7pg" firstAttribute="top" secondItem="O39-N7-FwU" secondAttribute="bottom" constant="498" id="PvZ-3B-uee"/>
+                            <constraint firstItem="O39-N7-FwU" firstAttribute="leading" secondItem="ars-Xn-2Vl" secondAttribute="leading" id="av3-EV-Nx1"/>
+                            <constraint firstAttribute="trailing" secondItem="O39-N7-FwU" secondAttribute="trailing" id="ufO-pq-5AF"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Test" image="testButton" id="0ch-l1-tXA"/>
+                    <tabBarItem key="tabBarItem" enabled="NO" title="Test" image="testButton" id="0ch-l1-tXA"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HCV-Kx-2Uy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -231,16 +226,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Work Viewer" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BJ6-e1-Q5f">
-                                <rect key="frame" x="137" y="28" width="327" height="42"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="327" id="ph5-AA-jfW"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="24"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0mL-D3-S2o">
                                 <rect key="frame" x="20" y="114" width="560" height="398"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -274,25 +259,38 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tm8-35-IaZ">
+                                <rect key="frame" x="0.0" y="13" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Work Viewer" id="lev-n3-l9b">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="JvY-3I-Oza" userLabel="Back">
+                                            <connections>
+                                                <action selector="btnBack" destination="dRf-LD-yND" id="B6k-dP-i84"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="lBL-bs-Ka0" firstAttribute="top" secondItem="BJ6-e1-Q5f" secondAttribute="bottom" constant="6" id="4fZ-9e-sOm"/>
                             <constraint firstItem="0mL-D3-S2o" firstAttribute="leading" secondItem="dmp-Sw-9dR" secondAttribute="leading" constant="20" id="BX7-ED-yqV"/>
                             <constraint firstItem="lBL-bs-Ka0" firstAttribute="leading" secondItem="0mL-D3-S2o" secondAttribute="leading" constant="5" id="Glf-Gz-UVM"/>
-                            <constraint firstItem="BJ6-e1-Q5f" firstAttribute="centerX" secondItem="dmp-Sw-9dR" secondAttribute="centerX" id="JDc-e8-UGo"/>
-                            <constraint firstItem="hjb-53-c7o" firstAttribute="top" secondItem="BJ6-e1-Q5f" secondAttribute="bottom" constant="481" id="OSK-Xc-Whl"/>
                             <constraint firstItem="hjb-53-c7o" firstAttribute="top" secondItem="0mL-D3-S2o" secondAttribute="bottom" constant="39" id="UZR-l6-XaH"/>
+                            <constraint firstItem="Tm8-35-IaZ" firstAttribute="top" secondItem="dmp-Sw-9dR" secondAttribute="top" constant="13" id="Ux4-n0-dea"/>
+                            <constraint firstItem="Tm8-35-IaZ" firstAttribute="leading" secondItem="dmp-Sw-9dR" secondAttribute="leadingMargin" constant="-20" id="Vl4-Aw-hEk"/>
                             <constraint firstItem="lBL-bs-Ka0" firstAttribute="centerX" secondItem="dmp-Sw-9dR" secondAttribute="centerX" constant="-8" id="bas-8A-Vj0"/>
                             <constraint firstItem="0mL-D3-S2o" firstAttribute="top" secondItem="lBL-bs-Ka0" secondAttribute="bottom" constant="18" id="kAA-1O-7as"/>
-                            <constraint firstItem="BJ6-e1-Q5f" firstAttribute="top" secondItem="bNS-du-e7e" secondAttribute="bottom" constant="8" symbolic="YES" id="s5h-mR-9Z8"/>
+                            <constraint firstItem="lBL-bs-Ka0" firstAttribute="top" secondItem="Tm8-35-IaZ" secondAttribute="bottom" constant="19" id="lrX-iI-6Wt"/>
                             <constraint firstItem="0mL-D3-S2o" firstAttribute="trailing" secondItem="lBL-bs-Ka0" secondAttribute="trailing" constant="21" id="tGB-yv-hAF"/>
+                            <constraint firstItem="Tm8-35-IaZ" firstAttribute="centerX" secondItem="dmp-Sw-9dR" secondAttribute="centerX" id="uYq-YY-LMK"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Work" image="workButton" id="xxK-Bs-XRG" userLabel="Work"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="0mL-D3-S2o" id="IiC-7a-wfi"/>
+                        <outlet property="workButton" destination="xxK-Bs-XRG" id="Pmc-At-OYp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fa9-Vx-J4m" userLabel="First Responder" sceneMemberID="firstResponder"/>

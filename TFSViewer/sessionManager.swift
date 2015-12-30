@@ -24,5 +24,8 @@ class sessionManager{
     
     var selectedProject: String?
     var folderLevel : Int?
-    var selectedQuery : String?
+    var selectedQuery_L0 : String?
+    var selectedQuery_L1 : String?
+    var selectedQuery_L2 : String?
+    var selectedQuery_L3 : String?
 }

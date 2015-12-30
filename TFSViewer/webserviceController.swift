@@ -30,6 +30,7 @@ class webserviceController {
         var name = ""
         var path = ""
         var wiql = ""
+        var isFolder = false
     }
     
     init(){ }
@@ -88,7 +89,7 @@ class webserviceController {
         task.resume()
         
         while running {
-            print("waiting...")
+            print("waiting WS response...")
             sleep(1)
         }
     }
@@ -143,7 +144,10 @@ class webserviceController {
         var api: String = ""
         var finalURL : String = ""
         var folderLevel : Int = 0
-        var selectedQuery : String = ""
+        var selectedQuery_L0 : String = ""
+        var selectedQuery_L1 : String = ""
+        var selectedQuery_L2 : String = ""
+        var selectedQuery_L3 : String = ""
         
         //Defino la estructura de la cadena base que no cambia a lo largo de las consultas
         if let account : String = oConfig.account, let selPro : String = sessionMng.selectedProject {
@@ -161,18 +165,38 @@ class webserviceController {
         }
         
         //Defino una variable que me permite eliminar lo opcional de la variable
-        if let selectedQueryOpt : String = sessionMng.selectedQuery  {
-            selectedQuery = selectedQueryOpt
+        if let selectedQueryOpt : String = sessionMng.selectedQuery_L0  {
+            selectedQuery_L0 = selectedQueryOpt
+        }
+        
+        if let selectedQueryOpt : String = sessionMng.selectedQuery_L1  {
+            selectedQuery_L1 = selectedQueryOpt
+        }
+        
+        if let selectedQueryOpt : String = sessionMng.selectedQuery_L2  {
+            selectedQuery_L2 = selectedQueryOpt
+        }
+        
+        if let selectedQueryOpt : String = sessionMng.selectedQuery_L3  {
+            selectedQuery_L3 = selectedQueryOpt
         }
         
         switch folderLevel {
             case 0 :
                     finalURL = urlBase + "?api-version=" + api
             case 1 :
-                    finalURL = urlBase + "/" + selectedQuery + "?$depth=1&api-version=" + api
+                    finalURL = urlBase + "/" + selectedQuery_L0 + "?$depth=1&api-version=" + api
+            case 2 :
+                    finalURL = urlBase + "/" + selectedQuery_L0 + "/" + selectedQuery_L1 +  "?$depth=1&api-version=" + api
+            case 3 :
+                    finalURL = urlBase + "/" + selectedQuery_L0 + "/" + selectedQuery_L1 + "/" + selectedQuery_L2 + "?$depth=1&api-version=" + api
+            case 4 :
+                    finalURL = urlBase + "/" + selectedQuery_L0 + "/" + selectedQuery_L1 + "/" + selectedQuery_L2 + "/" + selectedQuery_L3 + "?$depth=1&api-version=" + api
             default :
                 finalURL = finalURL + ""
         }
+        
+        //print (finalURL)
         
         //Me aseguro de que el arreglo en donde va a guardar la informacion este vacio
         self.queryList.removeAll()
@@ -201,9 +225,7 @@ class webserviceController {
                                 self.queryList = self.parseJsonQueries(objArray)
                             }
                         }
-                    }
-                    
-                    if folderLevel == 1{
+                    } else {
                         //Si la consulta del servicio arroja datos, los pasa de json a objetos
                         if let dict = anyObj as? [String: AnyObject] {
                             if let objArray = dict["children"] as? [AnyObject] {
@@ -224,7 +246,7 @@ class webserviceController {
         task.resume()
         
         while running {
-            print("waiting...")
+            print("waiting WS response...")
             sleep(1)
         }
       
@@ -234,6 +256,7 @@ class webserviceController {
     func parseJsonQueries(anyObj:AnyObject) -> Array<Query>{
         
         var list:Array<Query> = []
+        var isFolder : Bool
         
         if  anyObj is Array<AnyObject> {
             
@@ -245,7 +268,11 @@ class webserviceController {
                 b.path = (json["path"] as AnyObject? as? String) ?? ""
                 b.wiql = (json["wiql"] as AnyObject? as? String) ?? ""
                 
-                list.append(b)                
+                isFolder = false
+                isFolder = (json["isFolder"] as AnyObject? as? Bool) ?? false
+                b.isFolder = isFolder
+          
+                list.append(b)
             }
         }
         
