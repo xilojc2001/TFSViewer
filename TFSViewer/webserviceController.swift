@@ -14,6 +14,8 @@ class webserviceController {
     
     var projectList  : Array<Project> = []
     var queryList  : Array<Query> = []
+    var dataQueryList  : Array<dataQuery> = []
+    var urlList : Array<String> = []
     let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
     let sessionMng = sessionManager.sharedIntance
     
@@ -31,6 +33,19 @@ class webserviceController {
         var path = ""
         var wiql = ""
         var isFolder = false
+    }
+    
+    struct dataQuery {
+        var ID = 0
+        var Work_Item_Type = ""
+        var Title = ""
+        var Assigned_To = ""
+        var State = ""
+        var Remaining_Work = 0.0
+        var Activity = ""
+        var Iteration_Path = ""
+        var Original_Estimate = 0.0
+        var Completed_Work = 0.0
     }
     
     init(){ }
@@ -118,7 +133,7 @@ class webserviceController {
     }
     
     //Este metodo consulta los queries a traves del servicio web
-    func getQueries(){
+    func getQueries(wiql: String = "", workItem: String = ""){
         
         //Consulto los parametros de conexión
         let context = appDel.managedObjectContext
@@ -164,39 +179,49 @@ class webserviceController {
             folderLevel = folderLevelOpt
         }
         
-        //Defino una variable que me permite eliminar lo opcional de la variable
-        if let selectedQueryOpt : String = sessionMng.selectedQuery_L0  {
-            selectedQuery_L0 = selectedQueryOpt
+        //Si se especifica un url que corresponde a un Query particular, se utiliza ese url
+        if wiql != "" {
+            if workItem == ""{
+               finalURL = wiql
+            }else{
+               finalURL = workItem
+            }
+            
+        } else {
+            //Defino una variable que me permite eliminar lo opcional de la variable
+            if let selectedQueryOpt : String = sessionMng.selectedQuery_L0  {
+                selectedQuery_L0 = selectedQueryOpt
+            }
+            
+            if let selectedQueryOpt : String = sessionMng.selectedQuery_L1  {
+                selectedQuery_L1 = selectedQueryOpt
+            }
+            
+            if let selectedQueryOpt : String = sessionMng.selectedQuery_L2  {
+                selectedQuery_L2 = selectedQueryOpt
+            }
+            
+            if let selectedQueryOpt : String = sessionMng.selectedQuery_L3  {
+                selectedQuery_L3 = selectedQueryOpt
+            }
+            
+            switch folderLevel {
+                case 0 :
+                        finalURL = urlBase + "?api-version=" + api
+                case 1 :
+                        finalURL = urlBase + "/" + selectedQuery_L0 + "?$depth=1&api-version=" + api
+                case 2 :
+                        finalURL = urlBase + "/" + selectedQuery_L0 + "/" + selectedQuery_L1 +  "?$depth=1&api-version=" + api
+                case 3 :
+                        finalURL = urlBase + "/" + selectedQuery_L0 + "/" + selectedQuery_L1 + "/" + selectedQuery_L2 + "?$depth=1&api-version=" + api
+                case 4 :
+                        finalURL = urlBase + "/" + selectedQuery_L0 + "/" + selectedQuery_L1 + "/" + selectedQuery_L2 + "/" + selectedQuery_L3 + "?$depth=1&api-version=" + api
+                default :
+                    finalURL = finalURL + ""
+            }
         }
         
-        if let selectedQueryOpt : String = sessionMng.selectedQuery_L1  {
-            selectedQuery_L1 = selectedQueryOpt
-        }
-        
-        if let selectedQueryOpt : String = sessionMng.selectedQuery_L2  {
-            selectedQuery_L2 = selectedQueryOpt
-        }
-        
-        if let selectedQueryOpt : String = sessionMng.selectedQuery_L3  {
-            selectedQuery_L3 = selectedQueryOpt
-        }
-        
-        switch folderLevel {
-            case 0 :
-                    finalURL = urlBase + "?api-version=" + api
-            case 1 :
-                    finalURL = urlBase + "/" + selectedQuery_L0 + "?$depth=1&api-version=" + api
-            case 2 :
-                    finalURL = urlBase + "/" + selectedQuery_L0 + "/" + selectedQuery_L1 +  "?$depth=1&api-version=" + api
-            case 3 :
-                    finalURL = urlBase + "/" + selectedQuery_L0 + "/" + selectedQuery_L1 + "/" + selectedQuery_L2 + "?$depth=1&api-version=" + api
-            case 4 :
-                    finalURL = urlBase + "/" + selectedQuery_L0 + "/" + selectedQuery_L1 + "/" + selectedQuery_L2 + "/" + selectedQuery_L3 + "?$depth=1&api-version=" + api
-            default :
-                finalURL = finalURL + ""
-        }
-        
-        //print (finalURL)
+        //print ("URl Generado: \(finalURL)")
         
         //Me aseguro de que el arreglo en donde va a guardar la informacion este vacio
         self.queryList.removeAll()
@@ -226,10 +251,41 @@ class webserviceController {
                             }
                         }
                     } else {
-                        //Si la consulta del servicio arroja datos, los pasa de json a objetos
-                        if let dict = anyObj as? [String: AnyObject] {
-                            if let objArray = dict["children"] as? [AnyObject] {
-                                self.queryList = self.parseJsonQueries(objArray)
+                        if wiql == "" && workItem == "" {
+                            //Si la consulta del servicio arroja datos, los pasa de json a objetos
+                            if let dict = anyObj as? [String: AnyObject] {
+                                if let objArray = dict["children"] as? [AnyObject] {
+                                    self.queryList = self.parseJsonQueries(objArray)
+                                }
+                            }
+                        }
+                        
+                        if wiql != "" && workItem == ""{
+                            //Si la consulta del servicio arroja datos, los pasa de json a objetos
+                            if let dict = anyObj as? [String: AnyObject] {
+                                
+                                //Elimino los datos que puedan existir en los arreglos de urls y de datos de query
+                                self.urlList.removeAll()
+                                self.dataQueryList.removeAll()
+                                
+                                //Para algunos proyectos el arreglo de items se llama workItems
+                                if let objArray = dict["workItems"] as? [AnyObject] {
+                                    self.parseJsonWorkItems(objArray)
+                                }
+                                
+                                //Para otros proyectos el arreglo de items se llama workItemRelations
+                                if let objArray = dict["workItemRelations"] as? [AnyObject] {
+                                    self.parseJsonWorkItems(objArray)
+                                }
+                            }
+                        }
+                        
+                        if wiql != "" && workItem != ""{
+                            //Si la consulta del servicio arroja datos, los pasa de json a objetos
+                              if let dataWI = anyObj as? [String: AnyObject] {
+                                let id = dataWI["id"]! as AnyObject
+                                let obj = dataWI["fields"]! as AnyObject
+                                self.parseJsonDataQuery(id,anyObj: obj)
                             }
                         }
                     }
@@ -266,17 +322,55 @@ class webserviceController {
                 b.id = (json["id"] as AnyObject? as? String) ?? ""
                 b.name = (json["name"] as AnyObject? as? String) ?? ""
                 b.path = (json["path"] as AnyObject? as? String) ?? ""
-                b.wiql = (json["wiql"] as AnyObject? as? String) ?? ""
                 
+                //Se identifica si es un folder lo que se esta procesando
                 isFolder = false
                 isFolder = (json["isFolder"] as AnyObject? as? Bool) ?? false
                 b.isFolder = isFolder
-          
+                
+                if let dict = json["_links"] as? [String: AnyObject] {
+                    if let wiql = dict["wiql"] as? [String: AnyObject] {
+                        b.wiql = (wiql["href"] as AnyObject? as? String) ?? ""
+                    }
+                }
+                
+                
                 list.append(b)
             }
         }
         
         return list
+    }
+    
+    //Este metodo convierte los resultados json del servicio a objetos
+    func parseJsonWorkItems(anyObj:AnyObject){
+        if  anyObj is Array<AnyObject> {
+            
+            var b:String = ""
+            
+            for json in anyObj as! Array<AnyObject>{
+                b = (json["url"] as AnyObject? as? String) ?? ""
+                self.urlList.append(b)
+            }
+        }
+    }
+    
+    //Este metodo convierte los resultados json del servicio a objetos
+    func parseJsonDataQuery(id:AnyObject , anyObj:AnyObject){
+        var b:dataQuery = dataQuery()
+    
+        b.ID = (id as AnyObject? as! Int)
+        b.Work_Item_Type = (anyObj["System.WorkItemType"] as AnyObject? as? String) ?? ""
+        b.Title = (anyObj["System.Title"] as AnyObject? as? String) ?? ""
+        b.Assigned_To = (anyObj["System.AssignedTo"] as AnyObject? as? String) ?? ""
+        b.State = (anyObj["System.State"] as AnyObject? as? String) ?? ""
+        b.Remaining_Work = (anyObj["Microsoft.VSTS.Scheduling.RemainingWork"] as AnyObject? as? Double) ?? 0
+        b.Activity = (anyObj["Microsoft.VSTS.Common.Activity"] as AnyObject? as? String) ?? ""
+        b.Iteration_Path = (anyObj["System.IterationPath"] as AnyObject? as? String) ?? ""
+        b.Original_Estimate = (anyObj["Microsoft.VSTS.Scheduling.OriginalEstimate"] as AnyObject? as? Double) ?? 0
+        b.Completed_Work = (anyObj["Microsoft.VSTS.Scheduling.CompletedWork"] as AnyObject? as? Double) ?? 0
+        
+        dataQueryList.append(b)
     }
     
 }

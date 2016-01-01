@@ -23,6 +23,11 @@ class configureViewController: UIViewController {
     
     let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
     let sessionMng = sessionManager.sharedIntance
+    
+    //Variables para controlar los controles de la barra inferior
+    var tabBarItemProjects: UITabBarItem = UITabBarItem()
+    var tabBarItemWork: UITabBarItem = UITabBarItem()
+    var tabBarItemTest: UITabBarItem = UITabBarItem()
  
     //Esta funcion se encarga de tomar los datos de la pantalla y almacenarlos en la base de datos
     @IBAction func btnSave (){
@@ -110,11 +115,16 @@ class configureViewController: UIViewController {
         //Verifico si hay conexion a internet
         let isConnected = reachability.isConnectedToNetwork()
         
-        if isConnected {
-            print ("The connection works!!")
-        } else {
-            print ("There is not Internet connection!!")
-        }
+        if isConnected == false {
+            //Se define la alerta que se va a presentar
+            let alertController = UIAlertController(title: "TFSViewer", message:"Network connection not found!, some options won't be available", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            
+            //Se da un ciclo de espera antes de presentar la alerta
+            dispatch_async(dispatch_get_main_queue(), {
+                self.presentViewController(alertController, animated: true, completion: nil)
+            })
+        }       
         
     }
     
@@ -122,5 +132,24 @@ class configureViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        let tabBarControllerItems = self.tabBarController?.tabBar.items
+        
+        if let arrayOfTabBarItems = tabBarControllerItems as! AnyObject as? NSArray{
+            
+            tabBarItemProjects = arrayOfTabBarItems[1] as! UITabBarItem
+            tabBarItemProjects.enabled = true
+            
+            tabBarItemWork = arrayOfTabBarItems[2] as! UITabBarItem
+            tabBarItemWork.enabled = true
+            
+            tabBarItemTest = arrayOfTabBarItems[3] as! UITabBarItem
+            tabBarItemTest.enabled = false
+            
+        }
+    }
+    
+    
 }
 

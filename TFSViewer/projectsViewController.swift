@@ -16,6 +16,10 @@ class projectsViewController: UIViewController, UIPickerViewDelegate {
     let sessionMng = sessionManager.sharedIntance
     var projectsList = [""]
     
+    //Variables para controlar los controles de la barra inferior
+    var tabBarItemWork: UITabBarItem = UITabBarItem()
+    var tabBarItemTest: UITabBarItem = UITabBarItem()
+    
     override func viewDidLoad() {
         let wsc = webserviceController()
         wsc.getProjects()
@@ -50,5 +54,18 @@ class projectsViewController: UIViewController, UIPickerViewDelegate {
         let projectSelection = projectsList [row]
         sessionMng.selectedProject = projectSelection
         
+        //Una vez seleccionado el proyecto se pueden habilitar los otros botones de la barra
+        let tabBarControllerItems = self.tabBarController?.tabBar.items
+        
+        if sessionMng.selectedProject != "" {
+             if let arrayOfTabBarItems = tabBarControllerItems as! AnyObject as? NSArray{
+                tabBarItemWork = arrayOfTabBarItems[2] as! UITabBarItem
+                tabBarItemWork.enabled = true
+                
+                tabBarItemTest = arrayOfTabBarItems[3] as! UITabBarItem
+                tabBarItemTest.enabled = false
+                
+            }
+        }
     }
 }

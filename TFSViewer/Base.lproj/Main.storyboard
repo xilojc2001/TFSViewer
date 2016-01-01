@@ -207,7 +207,7 @@
                             <constraint firstAttribute="trailing" secondItem="O39-N7-FwU" secondAttribute="trailing" id="ufO-pq-5AF"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" enabled="NO" title="Test" image="testButton" id="0ch-l1-tXA"/>
+                    <tabBarItem key="tabBarItem" title="Test" image="testButton" id="0ch-l1-tXA"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HCV-Kx-2Uy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -217,7 +217,7 @@
         <!--Work-->
         <scene sceneID="Lyy-Ap-evW">
             <objects>
-                <viewController id="dRf-LD-yND" userLabel="Work" customClass="workViewController" customModule="TFSViewer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="cxcxc" id="dRf-LD-yND" userLabel="Work" customClass="workViewController" customModule="TFSViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bNS-du-e7e"/>
                         <viewControllerLayoutGuide type="bottom" id="hjb-53-c7o"/>
@@ -289,8 +289,8 @@
                     <tabBarItem key="tabBarItem" title="Work" image="workButton" id="xxK-Bs-XRG" userLabel="Work"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="lblChoose" destination="lBL-bs-Ka0" id="YFZ-KA-3UN"/>
                         <outlet property="tableView" destination="0mL-D3-S2o" id="IiC-7a-wfi"/>
-                        <outlet property="workButton" destination="xxK-Bs-XRG" id="Pmc-At-OYp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fa9-Vx-J4m" userLabel="First Responder" sceneMemberID="firstResponder"/>
