@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Configure-->
@@ -226,6 +227,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3uD-zb-b8K" userLabel="barChartView" customClass="BarChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="57" width="600" height="494"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zaz-fe-xrs" userLabel="pieChartView" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="57" width="600" height="494"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0mL-D3-S2o">
                                 <rect key="frame" x="20" y="114" width="560" height="398"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -254,7 +263,10 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chose your query" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBL-bs-Ka0">
-                                <rect key="frame" x="25" y="76" width="534" height="20"/>
+                                <rect key="frame" x="25" y="76" width="143" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="143" id="vg7-ek-MMW"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -268,28 +280,51 @@
                                                 <action selector="btnBack" destination="dRf-LD-yND" id="B6k-dP-i84"/>
                                             </connections>
                                         </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem enabled="NO" title="Next" id="uZd-u0-cpK">
+                                                <connections>
+                                                    <action selector="btnNext_Act" destination="dRf-LD-yND" id="vum-cl-LAQ"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem enabled="NO" title="Save" id="kTB-QK-X8A" userLabel="Btn Save">
+                                                <connections>
+                                                    <action selector="btnSave_Act" destination="dRf-LD-yND" id="ekl-Gv-3Bu"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="0mL-D3-S2o" firstAttribute="leading" secondItem="dmp-Sw-9dR" secondAttribute="leading" constant="20" id="BX7-ED-yqV"/>
-                            <constraint firstItem="lBL-bs-Ka0" firstAttribute="leading" secondItem="0mL-D3-S2o" secondAttribute="leading" constant="5" id="Glf-Gz-UVM"/>
-                            <constraint firstItem="hjb-53-c7o" firstAttribute="top" secondItem="0mL-D3-S2o" secondAttribute="bottom" constant="39" id="UZR-l6-XaH"/>
-                            <constraint firstItem="Tm8-35-IaZ" firstAttribute="top" secondItem="dmp-Sw-9dR" secondAttribute="top" constant="13" id="Ux4-n0-dea"/>
-                            <constraint firstItem="Tm8-35-IaZ" firstAttribute="leading" secondItem="dmp-Sw-9dR" secondAttribute="leadingMargin" constant="-20" id="Vl4-Aw-hEk"/>
-                            <constraint firstItem="lBL-bs-Ka0" firstAttribute="centerX" secondItem="dmp-Sw-9dR" secondAttribute="centerX" constant="-8" id="bas-8A-Vj0"/>
-                            <constraint firstItem="0mL-D3-S2o" firstAttribute="top" secondItem="lBL-bs-Ka0" secondAttribute="bottom" constant="18" id="kAA-1O-7as"/>
-                            <constraint firstItem="lBL-bs-Ka0" firstAttribute="top" secondItem="Tm8-35-IaZ" secondAttribute="bottom" constant="19" id="lrX-iI-6Wt"/>
-                            <constraint firstItem="0mL-D3-S2o" firstAttribute="trailing" secondItem="lBL-bs-Ka0" secondAttribute="trailing" constant="21" id="tGB-yv-hAF"/>
-                            <constraint firstItem="Tm8-35-IaZ" firstAttribute="centerX" secondItem="dmp-Sw-9dR" secondAttribute="centerX" id="uYq-YY-LMK"/>
+                            <constraint firstItem="3uD-zb-b8K" firstAttribute="top" secondItem="Tm8-35-IaZ" secondAttribute="bottom" id="1fl-G6-JAV"/>
+                            <constraint firstItem="0mL-D3-S2o" firstAttribute="centerX" secondItem="Tm8-35-IaZ" secondAttribute="centerX" id="6QY-Gp-piM"/>
+                            <constraint firstItem="zaz-fe-xrs" firstAttribute="trailing" secondItem="3uD-zb-b8K" secondAttribute="trailing" id="Ca3-DI-6Ww"/>
+                            <constraint firstItem="lBL-bs-Ka0" firstAttribute="leading" secondItem="dmp-Sw-9dR" secondAttribute="leadingMargin" constant="5" id="CkM-dE-8pc"/>
+                            <constraint firstItem="hjb-53-c7o" firstAttribute="top" secondItem="0mL-D3-S2o" secondAttribute="bottom" constant="39" id="DMr-mX-1Qd"/>
+                            <constraint firstItem="zaz-fe-xrs" firstAttribute="leading" secondItem="Tm8-35-IaZ" secondAttribute="leading" id="FsJ-bS-xfy"/>
+                            <constraint firstItem="zaz-fe-xrs" firstAttribute="top" secondItem="3uD-zb-b8K" secondAttribute="top" id="IFA-0O-1Nh"/>
+                            <constraint firstItem="lBL-bs-Ka0" firstAttribute="top" secondItem="Tm8-35-IaZ" secondAttribute="bottom" constant="19" id="ILU-76-9I5"/>
+                            <constraint firstAttribute="trailing" secondItem="Tm8-35-IaZ" secondAttribute="trailing" id="JLd-Iz-Fbg"/>
+                            <constraint firstItem="3uD-zb-b8K" firstAttribute="trailing" secondItem="Tm8-35-IaZ" secondAttribute="trailing" id="Pdp-KH-FtO"/>
+                            <constraint firstItem="0mL-D3-S2o" firstAttribute="leading" secondItem="dmp-Sw-9dR" secondAttribute="leadingMargin" id="X6u-1L-Ayo"/>
+                            <constraint firstItem="3uD-zb-b8K" firstAttribute="leading" secondItem="zaz-fe-xrs" secondAttribute="leading" id="bhn-PW-5vz"/>
+                            <constraint firstItem="zaz-fe-xrs" firstAttribute="bottom" secondItem="hjb-53-c7o" secondAttribute="top" id="cbb-fX-qVs"/>
+                            <constraint firstItem="0mL-D3-S2o" firstAttribute="top" secondItem="lBL-bs-Ka0" secondAttribute="bottom" constant="18" id="fmp-gd-5Mw"/>
+                            <constraint firstItem="3uD-zb-b8K" firstAttribute="bottom" secondItem="hjb-53-c7o" secondAttribute="top" id="gYg-zX-rgN"/>
+                            <constraint firstItem="Tm8-35-IaZ" firstAttribute="leading" secondItem="dmp-Sw-9dR" secondAttribute="leading" id="git-35-hZq"/>
+                            <constraint firstItem="Tm8-35-IaZ" firstAttribute="top" secondItem="dmp-Sw-9dR" secondAttribute="topMargin" constant="13" id="zwb-Dg-J7k"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Work" image="workButton" id="xxK-Bs-XRG" userLabel="Work"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="barChartView" destination="3uD-zb-b8K" id="USr-Fs-dnd"/>
+                        <outlet property="btnNext" destination="uZd-u0-cpK" id="yuw-51-hRX"/>
+                        <outlet property="btnSave" destination="kTB-QK-X8A" id="CCa-CV-LyW"/>
                         <outlet property="lblChoose" destination="lBL-bs-Ka0" id="YFZ-KA-3UN"/>
+                        <outlet property="pieChartView" destination="zaz-fe-xrs" id="KbM-A6-hn5"/>
                         <outlet property="tableView" destination="0mL-D3-S2o" id="IiC-7a-wfi"/>
                     </connections>
                 </viewController>

@@ -11,7 +11,7 @@ import CoreData
 
 class projectsViewController: UIViewController, UIPickerViewDelegate {
     @IBOutlet weak var selectedProject: UILabel!
-   
+    
     let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
     let sessionMng = sessionManager.sharedIntance
     var projectsList = [""]
@@ -21,6 +21,12 @@ class projectsViewController: UIViewController, UIPickerViewDelegate {
     var tabBarItemTest: UITabBarItem = UITabBarItem()
     
     override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         let wsc = webserviceController()
         wsc.getProjects()
         
@@ -28,9 +34,8 @@ class projectsViewController: UIViewController, UIPickerViewDelegate {
         for resultItem in wsc.projectList {
             projectsList.append(resultItem.name)
         }
-       
+        
         projectsList.sortInPlace()
-        super.viewDidLoad()
     }
     
     override func didReceiveMemoryWarning() {

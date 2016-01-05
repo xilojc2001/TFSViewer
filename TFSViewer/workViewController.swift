@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Charts
 
 class workViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     let sessionMng = sessionManager.sharedIntance
@@ -14,10 +15,16 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet var lblChoose: UILabel!
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var barChartView: BarChartView!
+    @IBOutlet var pieChartView: PieChartView!
+    @IBOutlet var btnNext: UIBarButtonItem!
+    @IBOutlet var btnSave: UIBarButtonItem!
     
     var queryList : [query] = []
     var dataQueryList : [dataQuery] = []
     let textCellIdentifier = "TextCell"
+    var dataLabels : [String] = []
+    var dataDoubles : [Double] = []
     
     struct query {
         var id = ""
@@ -42,12 +49,16 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
     
+    //Esta funcion es la que se ejecuta cuando el sistema identifica que el viewcontroller va a ser mostrado
     override func viewWillAppear(animated: Bool) {
         showQueryFolders()
     }
     
+    //Esta funcion es la que se encarga de hacer las consultas al servicio web y adicionar los queries
+    //en el arreglo de queries
     func showQueryFolders(){
          //Identifico si ya se ha consultado algun otro nivel
         if sessionMng.folderLevel == nil {
@@ -110,6 +121,9 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
+    //Esta funcion es la que se encarga de procesar la seleccion del query
+    //si es un folder ejecuta una nueva consulta y trae los queries
+    //pero si es un query lo ejecuta y trae los datos del servicio
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
@@ -135,14 +149,59 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
             tableView.reloadData()
         }else{
             showDataQuery(queryList[row].wiql)
+            sessionMng.chartPage = 1
+            groupDataQueryList ()
+            barChartView.hidden = false
+            pieChartView.hidden = true
+            btnNext.enabled = true
+            btnSave.enabled = true
         }
     }
     
-    //Esta funcion se encarga de regresar un nivel en la seleccion de queries
+    //Esta funcion es la que se encarga de procesar lo que se consulto de los servicios y agruparlo para
+    //poder graficarlo
+    func groupDataQueryList (){
+        //Se elimina la informacion previa que pueda tener los arreglos
+        self.dataLabels = []
+        self.dataDoubles = []
+        
+        //La grafica que se ha definido para la pagina 1 es una grafica de barras
+        //que muestra el trabajo total COMPLETADO por persona
+        if sessionMng.chartPage == 1{
+            for dataQueryObj in self.dataQueryList {
+                if self.dataLabels.indexOf(dataQueryObj.Assigned_To) == nil{
+                    self.dataLabels.append(dataQueryObj.Assigned_To)
+                    self.dataDoubles.append(dataQueryObj.Completed_Work)
+                }else{
+                    self.dataDoubles[dataLabels.indexOf(dataQueryObj.Assigned_To)!] = self.dataDoubles[self.dataLabels.indexOf(dataQueryObj.Assigned_To)!] + dataQueryObj.Completed_Work
+                }
+            }
+            
+            setBarChart(self.dataLabels, values: self.dataDoubles, label: "Completed Work")
+        }
+        
+        //La grafica que se ha definido para la pagina 2 es una grafica de pastel
+        //que muestra los items por estado
+        if sessionMng.chartPage == 2{
+            for dataQueryObj in self.dataQueryList {
+                if self.dataLabels.indexOf(dataQueryObj.State) == nil{
+                    self.dataLabels.append(dataQueryObj.State)
+                    self.dataDoubles.append(1)
+                }else{
+                    self.dataDoubles[self.dataLabels.indexOf(dataQueryObj.State)!] = self.dataDoubles[dataLabels.indexOf(dataQueryObj.State)!] + 1
+                }
+            }
+            
+            setPieChart(self.dataLabels, values: self.dataDoubles, label: "Items By State")
+        }
+        
+    }
+    
+    //Esta funcion se encarga de regresar un nivel en la seleccion de queries o a la grafica anterior
     @IBAction func btnBack (){
-        if sessionMng.folderLevel != 0 {
+        if sessionMng.folderLevel != 0 && sessionMng.chartPage == 1 {
             tableView.hidden=false
-            lblChoose.hidden=false
+            lblChoose.hidden=false            
             sessionMng.folderLevel = sessionMng.folderLevel! - 1
             
             //Si se selecciona un registro de la tabla, se debe volver a consultar teniendo en cuenta el nuevo registro
@@ -150,6 +209,40 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
             tableView.reloadData()
         }
         
+        if sessionMng.chartPage == 1 {
+            barChartView.hidden = true
+            pieChartView.hidden = true
+            btnNext.enabled = false
+            btnSave.enabled = false
+        }
+        
+        if sessionMng.chartPage == 2 {
+            sessionMng.chartPage = 1
+            groupDataQueryList ()
+            barChartView.hidden = false
+            pieChartView.hidden = true
+        }
+    }
+    
+    //Esta funcion permite avanzar en las diferentes graficas
+    @IBAction func btnNext_Act() {
+        if sessionMng.chartPage == 1 {
+            sessionMng.chartPage = 2
+            groupDataQueryList ()
+            barChartView.hidden = true
+            pieChartView.hidden = false
+        }
+    }
+    
+    //Esta funcion permite controlar lo que va a hacer el boton de Guardar
+    @IBAction func btnSave_Act() {
+        if sessionMng.chartPage == 1 {
+            barChartView.saveToCameraRoll()
+        }
+        
+        if sessionMng.chartPage == 2 {
+            pieChartView.saveToCameraRoll()
+        }
     }
     
     func showDataQuery(query: String){
@@ -157,9 +250,10 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.hidden=true
         lblChoose.hidden=true
         
-        //Obtengo los datos asociados al query 
+        //Obtengo los datos asociados al query
         wsc.getQueries(query)
         
+        //Por cada uno de los items, debo hacer el llamado al servicio y consultar los datos especificos
         for workItem in wsc.urlList{
             wsc.getQueries(query,workItem: workItem)
         }
@@ -180,6 +274,60 @@ class workViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             self.dataQueryList.append(tempDataQuery)
         }
+    }
+    
+    func setBarChart(dataPoints: [String], values: [Double], label: String) {
+        barChartView.noDataText = "You need to provide data for the chart."
+        
+        var dataEntries: [BarChartDataEntry] = []
+        
+        for i in 0..<dataPoints.count {
+            let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
+            dataEntries.append(dataEntry)
+        }
+        
+        let chartDataSet = BarChartDataSet(yVals: dataEntries, label: label)
+        let chartData = BarChartData(xVals: dataPoints, dataSet: chartDataSet)
+        barChartView.data = chartData
+        
+        barChartView.descriptionText = ""
+        
+        //Para establecer los colores de las barras (liberty,joyful,pastel,colorful,vordiplom)
+        chartDataSet.colors = ChartColorTemplates.joyful()
+        
+        //Para cambiar la posicion
+        barChartView.xAxis.labelPosition = .Bottom
+        
+        //Animacion de la visualizacion
+        barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+    }
+    
+    func setPieChart(dataPoints: [String], values: [Double], label: String) {
+        pieChartView.noDataText = "You need to provide data for the chart."
+        
+        var dataEntries: [ChartDataEntry] = []
+        
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
+            dataEntries.append(dataEntry)
+        }
+        
+        let pieChartDataSet = PieChartDataSet(yVals: dataEntries, label: label)
+        let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
+        pieChartView.data = pieChartData
+        
+        var colors: [UIColor] = []
+        
+        for _ in 0..<dataPoints.count {
+            let red = Double(arc4random_uniform(256))
+            let green = Double(arc4random_uniform(256))
+            let blue = Double(arc4random_uniform(256))
+            
+            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+            colors.append(color)
+        }
+        
+        pieChartDataSet.colors = colors
         
     }
 }

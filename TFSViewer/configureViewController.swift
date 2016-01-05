@@ -142,7 +142,7 @@ class configureViewController: UIViewController {
             tabBarItemProjects.enabled = true
             
             tabBarItemWork = arrayOfTabBarItems[2] as! UITabBarItem
-            tabBarItemWork.enabled = true
+            tabBarItemWork.enabled = false
             
             tabBarItemTest = arrayOfTabBarItems[3] as! UITabBarItem
             tabBarItemTest.enabled = false

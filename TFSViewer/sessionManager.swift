@@ -28,4 +28,5 @@ class sessionManager{
     var selectedQuery_L1 : String?
     var selectedQuery_L2 : String?
     var selectedQuery_L3 : String?
+    var chartPage: Int?
 }

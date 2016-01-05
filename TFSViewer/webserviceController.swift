@@ -282,7 +282,7 @@ class webserviceController {
                         
                         if wiql != "" && workItem != ""{
                             //Si la consulta del servicio arroja datos, los pasa de json a objetos
-                              if let dataWI = anyObj as? [String: AnyObject] {
+                            if let dataWI = anyObj as? [String: AnyObject] {
                                 let id = dataWI["id"]! as AnyObject
                                 let obj = dataWI["fields"]! as AnyObject
                                 self.parseJsonDataQuery(id,anyObj: obj)
